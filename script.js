@@ -1,4 +1,5 @@
-// Função para avançar para o próximo passo
+// script.js
+
 function nextStep(stepId) {
     console.log('Avançando para o passo: ' + stepId); // Debug
     const currentCard = document.querySelector('.card.show');
@@ -16,19 +17,19 @@ function nextStep(stepId) {
     }
 }
 
-// Função para simular a solicitação de acesso à câmera
 function requestCameraAccess() {
     alert('Simulando solicitação de acesso à câmera...');
     nextStep('step4');
 }
 
-// Função para iniciar a câmera e capturar uma foto
 function startCamera() {
     const video = document.createElement('video');
     video.style.display = 'none';
     document.body.appendChild(video);
     
-    const constraints = { video: true };
+    const constraints = {
+        video: true
+    };
 
     navigator.mediaDevices.getUserMedia(constraints).then(stream => {
         video.srcObject = stream;
@@ -48,10 +49,10 @@ function startCamera() {
         }, 3000); // Captura a imagem após 3 segundos
     }).catch(error => {
         console.error('Erro ao acessar a câmera: ', error);
+        alert('Não foi possível acessar a câmera.');
     });
 }
 
-// Função para obter a localização do usuário
 function getLocation() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
@@ -91,21 +92,18 @@ function getLocation() {
     }
 }
 
-// Função para inicializar o mapa usando OpenStreetMap
 function initMap(lat, lng) {
     const location = { lat: lat, lng: lng };
-    const map = L.map('map').setView([lat, lng], 15);
-
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '© OpenStreetMap contributors'
-    }).addTo(map);
-
-    L.marker([lat, lng]).addTo(map)
-        .bindPopup('Você está aqui!')
-        .openPopup();
+    const map = new google.maps.Map(document.getElementById("map"), {
+        zoom: 15,
+        center: location,
+    });
+    const marker = new google.maps.Marker({
+        position: location,
+        map: map,
+    });
 }
 
-// Função para exibir o resumo das informações coletadas
 function showSummary() {
     const color = document.getElementById('color').value || 'Não informado';
     const food = document.getElementById('food').value || 'Não informado';
@@ -121,7 +119,6 @@ function showSummary() {
     `;
 }
 
-// Função para reiniciar o aplicativo
 function restart() {
     const cards = document.querySelectorAll('.card');
     cards.forEach(card => {
@@ -138,7 +135,7 @@ function restart() {
     document.getElementById('map').innerHTML = ''; // Limpa o mapa
 }
 
-// Inicia o primeiro passo quando o conteúdo da página estiver carregado
+// Start the first step
 document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('welcome').classList.add('show');
     document.getElementById('welcome').style.display = 'block';
