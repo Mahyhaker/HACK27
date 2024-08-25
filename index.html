@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Descubra Quem Você É!</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+</head>
+<body>
+    <div class="container">
+        <div class="card" id="welcome">
+            <h1>Descubra Quem Você Realmente É!</h1>
+            <p>Responda algumas perguntas simples e revele aspectos ocultos de sua personalidade.</p>
+            <button onclick="nextStep('step1')">Começar</button>
+        </div>
+
+        <div class="card" id="step1" style="display: none;">
+            <h2>Qual é a sua cor favorita?</h2>
+            <input type="text" id="color" placeholder="Ex: Azul">
+            <button onclick="nextStep('step2')">Próximo</button>
+        </div>
+
+        <div class="card" id="step2" style="display: none;">
+            <h2>Qual é a sua comida preferida?</h2>
+            <input type="text" id="food" placeholder="Ex: Pizza">
+            <button onclick="nextStep('step3')">Próximo</button>
+        </div>
+
+        <div class="card" id="step3" style="display: none;">
+            <h2>Permitir Acesso à Câmera</h2>
+            <p>Precisamos de acesso à sua câmera para personalizar seu perfil.</p>
+            <button onclick="startCamera()">Permitir Acesso</button>
+        </div>
+
+        <div class="card" id="step4" style="display: none;">
+            <h2>Permitir Acesso à Localização</h2>
+            <p>Para personalizar seu resultado com base na sua localização, permita o acesso ao GPS.</p>
+            <button onclick="getLocation()">Permitir Acesso</button>
+        </div>
+
+        <div class="card" id="step5" style="display: none;">
+            <h2>Qual é o nome do seu primeiro animal de estimação?</h2>
+            <input type="text" id="pet" placeholder="Ex: Rex">
+            <button onclick="nextStep('final')">Finalizar</button>
+        </div>
+
+        <div class="card" id="final" style="display: none;">
+            <h2>Surpresa! Você compartilhou:</h2>
+            <ul id="dataSummary"></ul>
+            <p class="warning">Se este fosse um aplicativo malicioso, seus dados poderiam estar comprometidos. Reflita antes de compartilhar informações pessoais ou conceder permissões sem pensar!</p>
+            <div id="cameraOutput" style="display: none;">
+                <h2>Foto Capturada:</h2>
+                <img id="photo" src="" alt="Sua Foto" style="max-width: 100%; border-radius: 10px;">
+            </div>
+            <div id="locationOutput" style="display: none;">
+                <h2>Localização Capturada:</h2>
+                <p id="location"></p>
+                <div id="map" style="height: 400px; width: 100%; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);"></div>
+            </div>
+            <button onclick="restart()">Recomeçar</button>
+        </div>
+    </div>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

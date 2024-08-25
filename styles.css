@@ -1,0 +1,167 @@
+/* styles.css */
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(to right, #007bff, #00c6ff);
+    color: #fff;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+}
+
+.card {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 0.5s ease-in-out;
+}
+
+.card h1, .card h2 {
+    margin-bottom: 20px;
+}
+
+.card p {
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.card input {
+    width: calc(100% - 20px);
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    font-size: 16px;
+}
+
+.card button {
+    padding: 10px 20px;
+    background-color: #00c6ff;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.card button:hover {
+    background-color: #007bff;
+}
+
+.card.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+    text-align: left;
+}
+
+ul li {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.warning {
+    font-size: 18px;
+    color: #ffcc00;
+    margin-top: 20px;
+}
+
+#cameraOutput, #locationOutput {
+    margin-top: 20px;
+}
+
+/* Regras de mídia para telas pequenas */
+@media (max-width: 600px) {
+    .card {
+        padding: 15px;
+    }
+
+    .card h1 {
+        font-size: 20px;
+    }
+
+    .card h2 {
+        font-size: 18px;
+    }
+
+    .card p {
+        font-size: 14px;
+    }
+
+    .card input {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    .card button {
+        font-size: 16px;
+        padding: 8px 16px;
+    }
+
+    ul li {
+        font-size: 14px;
+    }
+
+    .warning {
+        font-size: 16px;
+    }
+}
+
+/* Regras de mídia para telas muito grandes */
+@media (min-width: 1200px) {
+    .container {
+        max-width: 600px;
+    }
+
+    .card {
+        padding: 30px;
+    }
+
+    .card h1 {
+        font-size: 28px;
+    }
+
+    .card h2 {
+        font-size: 24px;
+    }
+
+    .card p {
+        font-size: 18px;
+    }
+
+    .card input {
+        font-size: 18px;
+        padding: 12px;
+    }
+
+    .card button {
+        font-size: 20px;
+        padding: 12px 24px;
+    }
+
+    ul li {
+        font-size: 18px;
+    }
+
+    .warning {
+        font-size: 20px;
+    }
+}
