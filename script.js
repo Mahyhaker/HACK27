@@ -1,4 +1,4 @@
-// script.js
+let map; // Variável global para armazenar a instância do mapa
 
 function nextStep(stepId) {
     console.log('Avançando para o passo: ' + stepId); // Debug
@@ -26,7 +26,7 @@ function startCamera() {
     const video = document.createElement('video');
     video.style.display = 'none';
     document.body.appendChild(video);
-    
+
     const constraints = {
         video: true
     };
@@ -61,12 +61,11 @@ function getLocation() {
                 const longitude = position.coords.longitude;
                 document.getElementById('location').textContent = `Latitude: ${latitude}, Longitude: ${longitude}`;
                 document.getElementById('locationOutput').style.display = 'block';
-                initMap(latitude, longitude);
-                nextStep('step5');
+                initMap(latitude, longitude); // Inicializa o mapa
             },
             (error) => {
                 let errorMessage;
-                switch(error.code) {
+                switch (error.code) {
                     case error.PERMISSION_DENIED:
                         errorMessage = "Usuário negou a solicitação de Geolocalização.";
                         break;
@@ -82,26 +81,32 @@ function getLocation() {
                 }
                 document.getElementById('location').textContent = `Erro: ${errorMessage}`;
                 document.getElementById('locationOutput').style.display = 'block';
-                nextStep('step5');
             }
         );
     } else {
         document.getElementById('location').textContent = 'Geolocalização não é suportada por este navegador.';
         document.getElementById('locationOutput').style.display = 'block';
-        nextStep('step5');
     }
 }
 
 function initMap(lat, lng) {
-    const location = { lat: lat, lng: lng };
-    const map = new google.maps.Map(document.getElementById("map"), {
-        zoom: 15,
-        center: location,
-    });
-    const marker = new google.maps.Marker({
-        position: location,
-        map: map,
-    });
+    if (map) { 
+        map.remove(); 
+    }
+
+    // Cria uma nova instância do mapa
+    map = L.map('map').setView([lat, lng], 13);
+
+    // Adiciona as camadas do mapa
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '© OpenStreetMap'
+    }).addTo(map);
+
+    // Adiciona o marcador no mapa
+    L.marker([lat, lng]).addTo(map)
+        .bindPopup('Você está aqui!')
+        .openPopup();
 }
 
 function showSummary() {
@@ -110,13 +115,12 @@ function showSummary() {
     const pet = document.getElementById('pet').value || 'Não informado';
 
     const summaryList = document.getElementById('dataSummary');
-    summaryList.innerHTML = `
-        <li><strong>Cor Favorita:</strong> ${color}</li>
+    summaryList.innerHTML = 
+        `<li><strong>Cor Favorita:</strong> ${color}</li>
         <li><strong>Comida Preferida:</strong> ${food}</li>
         <li><strong>Nome do Primeiro Animal de Estimação:</strong> ${pet}</li>
         <li><strong>Acesso à Câmera:</strong> Permitido</li>
-        <li><strong>Acesso à Localização:</strong> Permitido</li>
-    `;
+        <li><strong>Acesso à Localização:</strong> Permitido</li>`;
 }
 
 function restart() {
@@ -132,7 +136,10 @@ function restart() {
     document.getElementById('pet').value = '';
     document.getElementById('cameraOutput').style.display = 'none';
     document.getElementById('locationOutput').style.display = 'none';
-    document.getElementById('map').innerHTML = ''; // Limpa o mapa
+    if (map) {
+        map.remove(); // Remove o mapa quando o usuário reinicia
+        map = null; // Reseta a variável do mapa
+    }
 }
 
 // Start the first step
